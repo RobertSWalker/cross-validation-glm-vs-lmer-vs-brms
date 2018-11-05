@@ -64,13 +64,13 @@ for(j in 1:100){ # number of repeated cross validations
  pred = list()
  mtcars <- mtcars[sample(nrow(mtcars)),]
  folds <- cut(seq(1,nrow(mtcars)),breaks=k,labels=FALSE)
-  listGLM[[j]] = kcv_functionGLM(form1,mtcars,mtcars$outcome_boxcox)
-  listLMER[[j]] = kcv_functionLMER(form2,mtcars,mtcars$outcome_boxcox)
+  listGLM[[j]] = kcv_functionGLM(form1,mtcars,mtcars$mpg)
+  listLMER[[j]] = kcv_functionLMER(form2,mtcars,mtcars$mpg)
 }
 
 cat("Average cross-validated R-sq for linear model =",mean(unlist(listGLM)))
 cat("Average cross-validated R-sq for lmer model =",mean(unlist(listLMER)))
 
 # Bayesian regression takes time and so not repeated, priors left at defaults
-kcv_functionBR(form2,mtcars,mtcars$outcome_boxcox) # cross-validated rsq for brms
+kcv_functionBR(form2,mtcars,mtcars$mpg) # cross-validated rsq for brms
 

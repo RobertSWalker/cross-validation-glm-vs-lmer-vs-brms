@@ -54,10 +54,10 @@ kcv_functionBR = function(form,df,y){
 }
 
 # write functional form for GLM 
-form1 = as.formula("mpg ~ wt + gear + cyl")
+form1 = as.formula("mpg ~ wt + cyl")
 
 # write functional form for lmer and brms
-form2 = as.formula("mpg ~ wt + (1 | cyl) + (1 | gear)")
+form2 = as.formula("mpg ~ wt + cyl + (wt | cyl)")
 
 k = 10 # set number of cross validation folds
 
@@ -72,8 +72,8 @@ for(j in 1:5){ # number of repeated cross validations
   listLMER[[j]] = kcv_functionLMER(form2,mtcars,mtcars$mpg)
 }
 
-cat("Average cross-validated R-sq for linear model =",mean(unlist(listGLM)))
-cat("Average cross-validated R-sq for lmer model =",mean(unlist(listLMER)))
+cat("Median cross-validated R-sq for linear model =",median(unlist(listGLM)))
+cat("Median cross-validated R-sq for lmer model =",median(unlist(listLMER)))
 
 # Bayesian regression takes time and so not repeated, priors left at defaults
 kcv_functionBR(form2,mtcars,mtcars$mpg) # cross-validated rsq for brms

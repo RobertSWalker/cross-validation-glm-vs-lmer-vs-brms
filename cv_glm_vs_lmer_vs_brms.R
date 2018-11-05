@@ -8,6 +8,10 @@ center_colmeans <- function(x) { xcenter = colMeans(x, na.rm=TRUE)
 varsToCenter = c("disp","hp","drat","wt","qsec")
 mtcars[varsToCenter] = center_colmeans(mtcars[varsToCenter])
 
+#convert certain columns to factors
+cols <- c("cyl", "vs", "am", "gear", "carb")
+mtcars[,cols] <- data.frame(apply(mtcars[cols], 2, as.factor))
+
 # check normality
 plotNormalHistogram(mtcars$mpg)
 shapiro.test(mtcars$mpg)
@@ -50,7 +54,7 @@ kcv_functionBR = function(form,df,y){
 }
 
 # write functional form for GLM 
-form1 = as.formula("mpg ~ wt + factor(gear) + factor(cyl)")
+form1 = as.formula("mpg ~ wt + gear + cyl")
 
 # write functional form for lmer and brms
 form2 = as.formula("mpg ~ wt + (1 | cyl) + (1 | gear)")

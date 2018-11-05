@@ -56,11 +56,11 @@ form1 = as.formula("mpg ~ wt + factor(gear) + factor(cyl)")
 form2 = as.formula("mpg ~ wt + (1 | cyl) + (1 | gear)")
 
 k = 10 # set number of cross validation folds
-set.seed(3)
+
 listLMER = list()
 listGLM = list()
 
-for(j in 1:100){ # number of repeated cross validations
+for(j in 1:5){ # number of repeated cross validations
  pred = list()
  mtcars <- mtcars[sample(nrow(mtcars)),]
  folds <- cut(seq(1,nrow(mtcars)),breaks=k,labels=FALSE)
@@ -74,3 +74,4 @@ cat("Average cross-validated R-sq for lmer model =",mean(unlist(listLMER)))
 # Bayesian regression takes time and so not repeated, priors left at defaults
 kcv_functionBR(form2,mtcars,mtcars$mpg) # cross-validated rsq for brms
 
+#END

@@ -1,16 +1,15 @@
 library(lme4)
 library(brms)
 library(rcompanion)
+library(tidyverse)
 
 # function to center x variables to make intercepts interpretable
-center_colmeans <- function(x) { xcenter = colMeans(x, na.rm=TRUE)
-  x - rep(xcenter, rep.int(nrow(x), ncol(x)))}
-varsToCenter = c("disp","hp","drat","wt","qsec")
-mtcars[varsToCenter] = center_colmeans(mtcars[varsToCenter])
+vars = c("disp","hp","drat","wt","qsec")
+mtcars <- mtcars %>% mutate_at(vars, scale, scale = FALSE)
 
 #convert certain columns to factors
 cols <- c("cyl", "vs", "am", "gear", "carb")
-mtcars[,cols] <- data.frame(apply(mtcars[cols], 2, as.factor))
+mtcars <- mtcars %>% mutate_at(cols, funs(factor(.))) # or use ordered
 
 # check normality
 plotNormalHistogram(mtcars$mpg)

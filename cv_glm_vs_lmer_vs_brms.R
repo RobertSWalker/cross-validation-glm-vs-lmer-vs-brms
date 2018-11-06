@@ -3,7 +3,7 @@ library(brms)
 library(rcompanion)
 library(tidyverse)
 
-# function to center x variables to make intercepts interpretable
+# center x variables to make intercepts interpretable
 vars = c("disp","hp","drat","wt","qsec")
 mtcars <- mtcars %>% mutate_at(vars, scale, scale = FALSE)
 

@@ -2,14 +2,20 @@ library(lme4)
 library(brms)
 library(rcompanion)
 library(tidyverse)
+library(magrittr)
 
-# center x variables to make intercepts interpretable
+#check data
+mtcars %>% tidyr::gather(variable, value) %>% 
+  ggplot(aes(value)) + geom_histogram(bins = 15) + 
+  facet_wrap(~variable, scales = 'free_x')
+
+# function to center x variables to make intercepts interpretable
 vars = c("disp","hp","drat","wt","qsec")
-mtcars <- mtcars %>% mutate_at(vars, scale, scale = FALSE)
+mtcars %<>% mutate_at(vars, scale, scale = FALSE)
 
 #convert certain columns to factors
 cols <- c("cyl", "vs", "am", "gear", "carb")
-mtcars <- mtcars %>% mutate_at(cols, funs(factor(.))) # or use ordered
+mtcars %<>% mutate_at(cols, funs(factor(.))) # or ordered
 
 # check normality
 plotNormalHistogram(mtcars$mpg)

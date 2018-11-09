@@ -9,9 +9,11 @@ mtcars %>% tidyr::gather(variable, value) %>%
   ggplot(aes(value)) + geom_histogram(bins = 15) + 
   facet_wrap(~variable, scales = 'free_x')
 
-# function to center x variables to make intercepts interpretable
-vars = c("disp","hp","drat","wt","qsec")
-mtcars %<>% mutate_at(vars, scale, scale = FALSE)
+# Function to center x variables to make intercepts interpretable
+center_colmeans <- function(x) { xcenter = colMeans(x, na.rm=TRUE)
+                                 x - rep(xcenter, rep.int(nrow(x), ncol(x)))}
+varsToCenter = c("disp","hp","drat","wt","qsec")
+mtcars[varsToCenter] = center_colmeans(mtcars[varsToCenter])
 
 #convert certain columns to factors
 cols <- c("cyl", "vs", "am", "gear", "carb")

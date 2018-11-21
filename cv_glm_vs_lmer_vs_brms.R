@@ -61,10 +61,10 @@ kcv_functionBR = function(form,df,y){
 }
 
 # write functional form for GLM 
-form1 = as.formula("mpg ~ wt + cyl")
+form1 = as.formula("mpg ~ 0 + wt + cyl")
 
 # write functional form for lmer and brms
-form2 = as.formula("mpg ~ wt + cyl + (wt | cyl)")
+form2 = as.formula("mpg ~ 0 + wt + cyl + (wt | cyl)")
 
 k = 10 # set number of cross validation folds
 

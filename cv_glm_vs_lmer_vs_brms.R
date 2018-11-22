@@ -19,6 +19,10 @@ mtcars[varsToCenter] = center_colmeans(mtcars[varsToCenter])
 cols <- c("cyl", "vs", "am", "gear", "carb")
 mtcars %<>% mutate_at(cols, funs(factor(.))) # or ordered
 
+# plot
+ggplot(mtcars, aes(y = mpg, x = wt, colour = cyl)) + geom_point() +
+  geom_smooth(method = "lm") + facet_grid(cyl ~ ., scales="free")
+
 # check normality
 plotNormalHistogram(mtcars$mpg)
 shapiro.test(mtcars$mpg)

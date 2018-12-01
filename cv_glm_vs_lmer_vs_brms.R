@@ -1,8 +1,6 @@
-library(lme4)
-library(brms)
-library(rcompanion)
-library(tidyverse)
-library(magrittr)
+pkgs <- c("lme4", "brms", "rcompanion", "tidyverse", "magrittr")
+#install.packages(pkgs)
+lapply(pkgs, library, character.only = TRUE)
 
 #check data
 mtcars %>% tidyr::gather(variable, value) %>% 
